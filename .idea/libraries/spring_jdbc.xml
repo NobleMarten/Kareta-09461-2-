@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="spring_jdbc">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Server/libs/spring-jdbc-6.1.14.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Server/libs/spring-core-6.1.14.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Server/libs/spring-beans-6.1.14.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Server/libs/spring-tx-6.1.14.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Server/libs/spring-jcl-6.1.14.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
