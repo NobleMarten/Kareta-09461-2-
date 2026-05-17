@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ru.gr0946x.ui.ChatController">
+
+    <!-- Левая панель: список онлайн-пользователей -->
+    <left>
+        <VBox prefWidth="190" spacing="6"
+              style="-fx-border-color: #cccccc; -fx-border-width: 0 1 0 0;">
+            <padding><Insets top="8" right="8" bottom="8" left="8"/></padding>
+
+            <Label text="Онлайн">
+                <font><Font name="System Bold" size="13.0"/></font>
+            </Label>
+
+            <Button fx:id="broadcastBtn" text="Общий чат"
+                    onAction="#onBroadcast" maxWidth="Infinity"
+                    style="-fx-font-weight: bold;"/>
+
+            <ListView fx:id="userList" VBox.vgrow="ALWAYS"/>
+        </VBox>
+    </left>
+
+    <!-- Центр: поиск + сообщения + ввод -->
+    <center>
+        <VBox spacing="6">
+            <padding><Insets top="8" right="8" bottom="8" left="8"/></padding>
+
+            <!-- Текущий чат -->
+            <Label fx:id="chatLabel" text="Общий чат"
+                   style="-fx-font-weight: bold; -fx-font-size: 13;"/>
+
+            <!-- Строка поиска -->
+            <HBox spacing="6" alignment="CENTER_LEFT">
+                <TextField fx:id="searchField" promptText="Поиск в переписке..."
+                           HBox.hgrow="ALWAYS" onAction="#onSearch"/>
+                <Button text="Найти" onAction="#onSearch"/>
+            </HBox>
+
+            <!-- Список сообщений -->
+            <ListView fx:id="messageList" VBox.vgrow="ALWAYS"/>
+
+            <!-- Поле ввода сообщения -->
+            <HBox spacing="6">
+                <TextField fx:id="messageInput" promptText="Введите сообщение..."
+                           HBox.hgrow="ALWAYS" onAction="#onSend"/>
+                <Button text="Отправить" onAction="#onSend"/>
+            </HBox>
+        </VBox>
+    </center>
+
+</BorderPane>

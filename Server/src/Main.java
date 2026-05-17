@@ -1,5 +1,7 @@
 import ru.gr0946x.net.Server;
 
-void main() {
-    var s = new Server(9460);
+public class Main {
+    public static void main(String[] args) {
+        new Server(9460);
+    }
 }

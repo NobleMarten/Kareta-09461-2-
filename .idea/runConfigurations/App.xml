@@ -1,8 +1,10 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="App (JavaFX)" type="Application" factoryName="Application">
-    <option name="MAIN_CLASS_NAME" value="App" />
-    <option name="MODULE" value="Client" />
-    <option name="VM_PARAMETERS" value="--module-path &quot;$PROJECT_DIR$/Client/libs&quot; --add-modules javafx.controls,javafx.fxml" />
+    <option name="ALTERNATIVE_JRE_PATH" value="21" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+    <option name="MAIN_CLASS_NAME" value="AppLauncher" />
+    <module name="Client" />
+    <option name="VM_PARAMETERS" value="--module-path $PROJECT_DIR$/Client/libs --add-modules javafx.controls,javafx.fxml" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>

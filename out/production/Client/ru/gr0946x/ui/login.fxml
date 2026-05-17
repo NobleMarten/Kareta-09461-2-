@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="ru.gr0946x.ui.LoginController"
+      alignment="CENTER" spacing="14"
+      prefWidth="360" prefHeight="300">
+
+    <padding><Insets top="40" right="40" bottom="40" left="40"/></padding>
+
+    <Label text="Kareta Chat">
+        <font><Font size="22.0" name="System Bold"/></font>
+    </Label>
+
+    <TextField fx:id="usernameField" promptText="Имя пользователя" maxWidth="280"/>
+    <PasswordField fx:id="passwordField" promptText="Пароль" maxWidth="280"/>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button fx:id="loginBtn" text="Войти"
+                onAction="#onLogin" prefWidth="120"/>
+        <Button fx:id="registerBtn" text="Зарегистрироваться"
+                onAction="#onRegister" prefWidth="150"/>
+    </HBox>
+
+    <Label fx:id="errorLabel" style="-fx-text-fill: #cc0000;" visible="false" wrapText="true" maxWidth="280"/>
+</VBox>
