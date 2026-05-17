@@ -41,6 +41,15 @@ public class UserRepository {
         return list.isEmpty() ? Optional.empty() : Optional.of(list.get(0));
     }
 
+    /** Возвращает пользователя по id, или empty если не найден. */
+    public Optional<User> findById(int id) {
+        var list = db.query(
+                "SELECT id, username, password FROM users WHERE id = ?",
+                USER_MAPPER, id
+        );
+        return list.isEmpty() ? Optional.empty() : Optional.of(list.get(0));
+    }
+
     /** Возвращает список всех имён пользователей. */
     public List<String> getAllUsernames() {
         return db.queryForList("SELECT username FROM users", String.class);

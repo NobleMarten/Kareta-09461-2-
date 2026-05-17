@@ -17,6 +17,7 @@ public class Communicator {
     private boolean isActive;
 
     private final List<Consumer<String>> dataListeners = new ArrayList<>();
+    private final List<Runnable> closeListeners = new ArrayList<>();
 
     public void addDataListener(Consumer<String> c){
         dataListeners.add(c);
@@ -24,6 +25,10 @@ public class Communicator {
 
     public void removeDataListener(Consumer<String> c){
         dataListeners.remove(c);
+    }
+
+    public void addCloseListener(Runnable r) {
+        closeListeners.add(r);
     }
 
     public Communicator(Socket socket) throws IOException {
@@ -57,6 +62,7 @@ public class Communicator {
             }
             finally {
                 stop();
+                for (var r : closeListeners) r.run();
             }
         }).start();
     }
