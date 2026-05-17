@@ -70,10 +70,27 @@ public class ChatController {
     private void handleData(String content, MessageType type) {
         switch (type) {
             case MESSAGE -> {
-                // Формат: "отправитель:текст"
+                // Broadcast — показываем только в режиме общего чата
+                if (selectedUser != null) return;
                 var parts = content.split(":", 2);
                 if (parts.length == 2) {
                     messages.add(parts[0] + ": " + parts[1]);
+                    scrollToBottom();
+                }
+            }
+            case PRIVATE -> {
+                // Личное — показываем только в чате с нужным пользователем
+                // Формат content: "отправитель:текст"
+                var parts = content.split(":", 2);
+                if (parts.length != 2) return;
+                var sender = parts[0];
+                var text  = parts[1];
+                // Показываем если sender — выбранный собеседник (его слова)
+                // или sender — я сам (история моих слов; echo не приходит для новых)
+                boolean fromSelected = sender.equalsIgnoreCase(selectedUser);
+                boolean fromMe       = sender.equalsIgnoreCase(myUsername);
+                if (selectedUser != null && (fromSelected || fromMe)) {
+                    messages.add(fromMe ? "Я: " + text : sender + ": " + text);
                     scrollToBottom();
                 }
             }
@@ -83,7 +100,10 @@ public class ChatController {
                 }
                 // HISTORY_END и SEARCH_END — не требуют действий в UI
             }
-            case ERROR -> messages.add("⚠ " + content);
+            case ERROR -> {
+                messages.add("⚠ " + content);
+                scrollToBottom();
+            }
             default -> { }
         }
     }
@@ -121,9 +141,13 @@ public class ChatController {
         var text = messageInput.getText().trim();
         if (text.isEmpty()) return;
         if (selectedUser == null) {
+            // Broadcast: сервер пришлёт эхо как MESSAGE → появится само
             client.sendData("MESSAGE:" + text);
         } else {
+            // Личное: эхо от сервера не приходит → показываем оптимистично
             client.sendData("PRIVATE:" + selectedUser + ":" + text);
+            messages.add("Я: " + text);
+            scrollToBottom();
         }
         messageInput.clear();
     }

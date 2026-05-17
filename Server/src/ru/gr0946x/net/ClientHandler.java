@@ -168,11 +168,14 @@ public class ClientHandler implements Runnable {
             return;
         }
         var recipient = recipientOpt.get();
-        messageRepository.save(currentUser.id(), recipient.id(), text);
+        int msgId = messageRepository.save(currentUser.id(), recipient.id(), text);
 
-        var msg = MessageType.MESSAGE + SEP + currentUser.username() + SEP + text;
-        sendRaw(msg);                         // отправителю (эхо)
-        server.sendToUser(toUsername, msg);   // получателю (если онлайн)
+        // Эхо не отправляем — клиент показывает своё сообщение оптимистично
+        var msg = MessageType.PRIVATE + SEP + currentUser.username() + SEP + text;
+        boolean delivered = server.sendToUser(toUsername, msg);
+        if (delivered) {
+            messageRepository.markAsReceived(msgId);
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -227,12 +230,16 @@ public class ClientHandler implements Runnable {
     // Утилиты
     // -------------------------------------------------------------------------
 
-    /** Отправляет список сообщений в формате MESSAGE:отправитель:текст */
+    /**
+     * Отправляет список сообщений с правильным типом:
+     * broadcast → MESSAGE, личное → PRIVATE.
+     */
     private void sendMessages(List<Message> messages) {
         for (var m : messages) {
             var senderName = userRepository.findById(m.senderId())
                     .map(User::username).orElse("?");
-            sendRaw(MessageType.MESSAGE + SEP + senderName + SEP + m.content());
+            var type = m.receiverId() == null ? MessageType.MESSAGE : MessageType.PRIVATE;
+            sendRaw(type + SEP + senderName + SEP + m.content());
         }
     }
 

@@ -2,7 +2,10 @@ package ru.gr0946x.net;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 
+import java.sql.Statement;
+import java.sql.Types;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -33,13 +36,30 @@ public class MessageRepository {
     }
 
     /**
-     * Сохраняет сообщение. receiverId == null означает broadcast.
+     * Сохраняет сообщение и возвращает сгенерированный id.
+     * receiverId == null означает broadcast.
      */
-    public void save(int senderId, Integer receiverId, String content) {
-        db.update(
-                "INSERT INTO messages (sender_id, receiver_id, content, sent_at) VALUES (?, ?, ?, ?)",
-                senderId, receiverId, content, LocalDateTime.now().format(FMT)
-        );
+    public int save(int senderId, Integer receiverId, String content) {
+        var keyHolder = new GeneratedKeyHolder();
+        db.update(con -> {
+            var ps = con.prepareStatement(
+                    "INSERT INTO messages (sender_id, receiver_id, content, sent_at) VALUES (?, ?, ?, ?)",
+                    Statement.RETURN_GENERATED_KEYS
+            );
+            ps.setInt(1, senderId);
+            if (receiverId == null) ps.setNull(2, Types.INTEGER);
+            else ps.setInt(2, receiverId);
+            ps.setString(3, content);
+            ps.setString(4, LocalDateTime.now().format(FMT));
+            return ps;
+        }, keyHolder);
+        var key = keyHolder.getKey();
+        return key != null ? key.intValue() : -1;
+    }
+
+    /** Помечает сообщение как доставленное получателю. */
+    public void markAsReceived(int messageId) {
+        db.update("UPDATE messages SET is_received = 1 WHERE id = ?", messageId);
     }
 
     /**
