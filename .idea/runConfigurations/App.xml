@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="App (JavaFX)" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="App" />
+    <option name="MODULE" value="Client" />
+    <option name="VM_PARAMETERS" value="--module-path &quot;$PROJECT_DIR$/Client/libs&quot; --add-modules javafx.controls,javafx.fxml" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

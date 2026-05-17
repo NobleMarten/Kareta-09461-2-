@@ -47,6 +47,10 @@ public class Client {
         communicator.sendData(data);
     }
 
+    public void addCloseListener(Runnable listener) {
+        communicator.addCloseListener(listener);
+    }
+
     public void stop(){
         communicator.stop();
     }

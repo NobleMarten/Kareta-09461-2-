@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="javafx">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Client/libs/javafx-base-17.0.13.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Client/libs/javafx-graphics-17.0.13.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Client/libs/javafx-controls-17.0.13.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Client/libs/javafx-fxml-17.0.13.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Client/libs/javafx-base-17.0.13-mac-aarch64.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Client/libs/javafx-graphics-17.0.13-mac-aarch64.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Client/libs/javafx-controls-17.0.13-mac-aarch64.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Client/libs/javafx-fxml-17.0.13-mac-aarch64.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
